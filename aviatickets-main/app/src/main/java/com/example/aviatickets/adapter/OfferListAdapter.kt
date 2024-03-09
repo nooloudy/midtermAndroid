@@ -39,8 +39,8 @@ class OfferListAdapter : ListAdapter<Offer, OfferListAdapter.ViewHolder>(OfferDi
                 arrivalTime.text = flight.arrivalTimeInfo
                 route.text = context.getString(
                     R.string.route_fmt,
-                    flight.departureLocation.code,
-                    flight.arrivalLocation.code
+                    flight.departureLocation?.code.orEmpty(),
+                    flight.arrivalLocation?.code.orEmpty()
                 )
                 duration.text = context.getString(
                     R.string.time_fmt,
@@ -63,10 +63,10 @@ class OfferListAdapter : ListAdapter<Offer, OfferListAdapter.ViewHolder>(OfferDi
         )
         private fun getAirlineImageUrl(airlineName: String): String {
             return when (airlineName) {
-                "Air Astana" -> "https://airastana.com/Portals/_default/Skins/DigitalSolutionSkin/svg/logo-full.svg"
+                "Air Astana" -> "https://logos-world.net/wp-content/uploads/2023/01/Air-Astana-Logo.png"
                 "FlyArystan" -> "https://airhex.com/images/airline-logos/alt/flyarystan.png"
                 "SCAT Airlines" -> "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/SCAT_Air_Company_Logo.svg/2560px-SCAT_Air_Company_Logo.svg.png"
-                "QazaqAir" -> "https://www.flyqazaq.com/wp-content/themes/qazaq/static/img/general/logo.svg"
+                "QazaqAir" -> "https://airhex.com/images/airline-logos/alt/qazaq-air.png"
                 else -> ""
             }
         }

@@ -1,7 +1,6 @@
 package com.example.aviatickets.model.network
 
-import android.telecom.Call
-import com.example.aviatickets.model.entity.Flight
+import retrofit2.Call
 import com.example.aviatickets.model.entity.Offer
 import retrofit2.http.GET
 

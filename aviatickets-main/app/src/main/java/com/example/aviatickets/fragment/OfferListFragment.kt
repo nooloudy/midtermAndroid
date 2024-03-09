@@ -3,11 +3,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aviatickets.R
 import com.example.aviatickets.databinding.FragmentOfferListBinding
 import com.example.aviatickets.model.entity.SortType
+import com.example.aviatickets.model.network.ApiClient
 import com.example.aviatickets.model.service.FakeService
+import kotlinx.coroutines.launch
 
 class OfferListFragment : Fragment() {
 
@@ -34,6 +37,7 @@ class OfferListFragment : Fragment() {
 
         setupUI()
         setupRecyclerView()
+        loadOffers()
     }
 
     private fun setupUI() {
@@ -63,6 +67,16 @@ class OfferListFragment : Fragment() {
             SortType.DURATION -> FakeService.offerList.sortedBy { it.flight.duration }
         }
         adapter.submitList(sortedList)
+    }
+    private fun loadOffers() {
+        lifecycleScope.launch {
+            try {
+                val apiService = ApiClient.apiService
+                val offers = apiService.getOffers()
+                adapter.submitList(offers)
+            } catch (e: Exception) {
+            }
+        }
     }
 
     override fun onDestroyView() {
