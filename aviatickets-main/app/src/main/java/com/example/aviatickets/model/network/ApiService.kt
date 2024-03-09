@@ -6,6 +6,6 @@ import com.example.aviatickets.model.entity.Offer
 import retrofit2.http.GET
 
 interface ApiService {
-    @GET("offers")
+    @GET("offer_list")
     suspend fun getOffers(): List<Offer>
 }

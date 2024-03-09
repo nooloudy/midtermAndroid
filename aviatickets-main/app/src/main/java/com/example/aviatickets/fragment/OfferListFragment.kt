@@ -70,4 +70,5 @@ class OfferListFragment : Fragment() {
         _binding = null
     }
 
+
 }

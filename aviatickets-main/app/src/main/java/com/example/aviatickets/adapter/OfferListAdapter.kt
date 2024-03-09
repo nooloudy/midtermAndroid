@@ -3,6 +3,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.aviatickets.R
 import com.example.aviatickets.databinding.ItemOfferBinding
 import com.example.aviatickets.model.entity.Offer
@@ -48,6 +49,11 @@ class OfferListAdapter : ListAdapter<Offer, OfferListAdapter.ViewHolder>(OfferDi
                 )
                 direct.text = context.getString(R.string.direct)
                 price.text = context.getString(R.string.price_fmt, offer.price.toString())
+                val imageUrl = getAirlineImageUrl(flight.airline.name)
+
+                Glide.with(context)
+                    .load(imageUrl)
+                    .into(airlineImage)
             }
         }
 
@@ -55,6 +61,15 @@ class OfferListAdapter : ListAdapter<Offer, OfferListAdapter.ViewHolder>(OfferDi
             first = minutes / 60,
             second = minutes % 60
         )
+        private fun getAirlineImageUrl(airlineName: String): String {
+            return when (airlineName) {
+                "Air Astana" -> "https://airastana.com/Portals/_default/Skins/DigitalSolutionSkin/svg/logo-full.svg"
+                "FlyArystan" -> "https://airhex.com/images/airline-logos/alt/flyarystan.png"
+                "SCAT Airlines" -> "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/SCAT_Air_Company_Logo.svg/2560px-SCAT_Air_Company_Logo.svg.png"
+                "QazaqAir" -> "https://www.flyqazaq.com/wp-content/themes/qazaq/static/img/general/logo.svg"
+                else -> ""
+            }
+        }
     }
 
 }
