@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aviatickets.R
 import com.example.aviatickets.databinding.FragmentOfferListBinding
+import com.example.aviatickets.model.entity.Offer
 import com.example.aviatickets.model.entity.SortType
 import com.example.aviatickets.model.network.ApiClient
 import com.example.aviatickets.model.service.FakeService
@@ -45,26 +46,26 @@ class OfferListFragment : Fragment() {
             sortRadioGroup.setOnCheckedChangeListener { _, checkedId ->
                 when (checkedId) {
                     R.id.sort_by_price -> {
-                        sortAndRefreshList(SortType.PRICE)
+                        sortAndRefreshList(SortType.PRICE, adapter.currentList)
                     }
                     R.id.sort_by_duration -> {
-                        sortAndRefreshList(SortType.DURATION)
+                        sortAndRefreshList(SortType.DURATION, adapter.currentList)
                     }
                 }
             }
         }
     }
 
+
     private fun setupRecyclerView() {
         binding.offerList.layoutManager = LinearLayoutManager(requireContext())
         binding.offerList.adapter = adapter
-        adapter.submitList(FakeService.offerList)
     }
 
-    private fun sortAndRefreshList(sortType: SortType) {
+    private fun sortAndRefreshList(sortType: SortType, offerList: List<Offer>) {
         val sortedList = when (sortType) {
-            SortType.PRICE -> FakeService.offerList.sortedBy { it.price }
-            SortType.DURATION -> FakeService.offerList.sortedBy { it.flight.duration }
+            SortType.PRICE -> offerList.sortedBy { it.price }
+            SortType.DURATION -> offerList.sortedBy { it.flight.duration }
         }
         adapter.submitList(sortedList)
     }

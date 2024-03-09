@@ -35,8 +35,14 @@ class OfferListAdapter : ListAdapter<Offer, OfferListAdapter.ViewHolder>(OfferDi
             val flight = offer.flight
 
             with(binding) {
+                val imageUrl = getAirlineImageUrl(flight.airline.name)
+
+                Glide.with(context)
+                    .load(imageUrl)
+                    .into(airlineImage)
                 departureTime.text = flight.departureTimeInfo
                 arrivalTime.text = flight.arrivalTimeInfo
+
                 route.text = context.getString(
                     R.string.route_fmt,
                     flight.departureLocation?.code.orEmpty(),
@@ -49,11 +55,6 @@ class OfferListAdapter : ListAdapter<Offer, OfferListAdapter.ViewHolder>(OfferDi
                 )
                 direct.text = context.getString(R.string.direct)
                 price.text = context.getString(R.string.price_fmt, offer.price.toString())
-                val imageUrl = getAirlineImageUrl(flight.airline.name)
-
-                Glide.with(context)
-                    .load(imageUrl)
-                    .into(airlineImage)
             }
         }
 
